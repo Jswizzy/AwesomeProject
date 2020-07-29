@@ -1,21 +1,29 @@
 import React from 'react';
-import { Text, View, StyleSheet, StatusBar } from 'react-native';
+import {
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  StatusBar,
+  FlatList,
+} from 'react-native';
 import { ColorBox } from './components/ColorBox';
+import { COLORS } from './Colors';
 
 const App = () => {
+  const renderItem = ({ item }) => (
+    <ColorBox colorName={item.colorName} hexCode={item.hexCode} />
+  );
+
   return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <Text style={styles.title}>
-          Here are some boxes of different colors:
-        </Text>
-        <ColorBox color={'#2aa198'}>Cyan</ColorBox>
-        <ColorBox color={'#268bd2'}>Blue</ColorBox>
-        <ColorBox color={'#d33682'}>Magenta</ColorBox>
-        <ColorBox color={'#cb4b16'}>Orange</ColorBox>
-      </View>
+    <SafeAreaView>
+      <FlatList
+        data={COLORS}
+        keyExtractor={(item) => item.colorName}
+        renderItem={renderItem}
+        ListHeaderComponent={<Text style={styles.text}>Solarized</Text>}
+      />
       <StatusBar barStyle="default" />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -28,6 +36,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#666',
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
