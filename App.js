@@ -1,21 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View, StyleSheet, StatusBar } from 'react-native';
+import { ColorBox } from './components/ColorBox';
 
-export default function App() {
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          Here are some boxes of different colors:
+        </Text>
+        <ColorBox color={'#2aa198'}>Cyan</ColorBox>
+        <ColorBox color={'#268bd2'}>Blue</ColorBox>
+        <ColorBox color={'#d33682'}>Magenta</ColorBox>
+        <ColorBox color={'#cb4b16'}>Orange</ColorBox>
+      </View>
+      <StatusBar barStyle="default" />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 50,
+    paddingHorizontal: 10,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#666',
   },
 });
+
+export default App;
