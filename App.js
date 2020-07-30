@@ -1,46 +1,24 @@
 import React from 'react';
-import {
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  StatusBar,
-  FlatList,
-} from 'react-native';
-import { ColorBox } from './components/ColorBox';
-import { COLORS } from './Colors';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { ColorPalette } from './screens/ColorPalette';
+import { Home } from './screens/Home';
+
+const Stack = createStackNavigator();
 
 const App = () => {
-  const renderItem = ({ item }) => (
-    <ColorBox colorName={item.colorName} hexCode={item.hexCode} />
-  );
-
   return (
-    <SafeAreaView>
-      <FlatList
-        data={COLORS}
-        keyExtractor={(item) => item.colorName}
-        renderItem={renderItem}
-        ListHeaderComponent={<Text style={styles.text}>Solarized</Text>}
-      />
-      <StatusBar barStyle="default" />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen
+          name="ColorPalette"
+          component={ColorPalette}
+          options={({ route }) => ({ title: route.params.paletteName })}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 50,
-    paddingHorizontal: 10,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#666',
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-});
 
 export default App;
