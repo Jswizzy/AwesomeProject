@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import { COLOR_PALETTES } from '../Colors';
 import { PalettePreview } from '../components/PalettePreview';
 
+const URL = 'https://color-palette-api.kadikraman.now.sh/palettes';
+
 export const Home = ({ navigation }) => {
+  const [palettes, setPalettes] = useState([]);
+
+  const handleFetchPalettes = useCallback(async () => {
+    const response = await fetch(URL);
+    if (response.ok) {
+      const palettes = await response.json();
+      setPalettes(palettes);
+    }
+  }, []);
+
+  useEffect(() => {
+    handleFetchPalettes();
+  }, [handleFetchPalettes]);
+
   return (
     <FlatList
       style={styles.list}
-      data={COLOR_PALETTES}
+      data={palettes}
       keyExtractor={(item) => item.paletteName}
       renderItem={({ item }) => (
         <PalettePreview
